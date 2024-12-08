@@ -1,8 +1,9 @@
-{
+{"homepage": ".",
   "name": "project2_355",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^2.20.3",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "cra-template": "1.2.0",
@@ -14,6 +15,7 @@
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^4.2.4"
+    
   },
   "scripts": {
     "start": "react-scripts start",

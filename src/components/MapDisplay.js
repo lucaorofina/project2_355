@@ -1,36 +1,34 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 
-const MapDisplay = ({ locations }) => {
-  const mapRef = useRef(null);
+const mapContainerStyle = {
+  width: '100%',
+  height: '500px'
+};
 
-  useEffect(() => {
-    const initMap = () => {
-      const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 40.7128, lng: -74.0060 }, // Default to NYC
-        zoom: 12,
-      });
+const center = {
+  lat: 40.7128, // Example: New York City latitude
+  lng: -74.0060 // Example: New York City longitude
+};
 
-      locations.forEach(location => {
-        new window.google.maps.Marker({
-          position: location,
-          map: map,
-        });
-      });
-    };
+const MapDisplay = () => {
+  // Load Google Maps script
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+  });
 
-    if (!window.google) {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY`;
-      script.async = true;
-      script.onload = initMap;
-      document.body.appendChild(script);
-    } else {
-      initMap();
-    }
-  }, [locations]);
+  if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div className="map-container" ref={mapRef} style={{ height: '400px', width: '100%' }}></div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <GoogleMap 
+        mapContainerStyle={mapContainerStyle} 
+        center={center} 
+        zoom={12}
+      >
+        <Marker position={center} />
+      </GoogleMap>
+    </div>
   );
 };
 
