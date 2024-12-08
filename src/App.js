@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import MapDisplay from './components/MapDisplay';
 import BusinessList from './components/BusinessList';
+import TripPlannerForm from './components/TripPlannerForm';
 
 const App = () => {
   const [businesses, setBusinesses] = useState([]);
@@ -26,6 +27,8 @@ const App = () => {
       <SearchBar onSearch={handleSearch} />
       <MapDisplay locations={locations} />
       <BusinessList businesses={businesses} />
+      <h2>Trip Planner</h2>
+      <TripPlannerForm />
     </div>
   );
 };
