@@ -1,0 +1,20 @@
+.business-card
+ {
+    max-width: 300px;
+    margin: 10px;
+  }
+  
+  .business-image 
+  {
+    height: 140px;
+  }
+  
+  .business-name 
+  {
+    font-size: 1rem;
+  }
+  
+  .business-review
+   {
+    color: gray;
+  }
