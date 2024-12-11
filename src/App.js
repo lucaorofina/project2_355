@@ -3,6 +3,8 @@ import SearchBar from './components/SearchBar';
 import MapDisplay from './components/MapDisplay';
 import BusinessList from './components/BusinessList';
 import TripPlannerForm from './components/TripPlannerForm';
+import Navbar from './Navbar';
+import './App.css';
 
 const App = () => {
   const [businesses, setBusinesses] = useState([]);
@@ -23,8 +25,11 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>Business Directory</h1>
-      <SearchBar onSearch={handleSearch} />
+      <Navbar />
+
+
+      {/*<SearchBar onSearch={handleSearch} />*/}
+        <h1> Local Business Directory</h1>
       <MapDisplay locations={locations} />
       <BusinessList businesses={businesses} />
       <h2>Trip Planner</h2>
