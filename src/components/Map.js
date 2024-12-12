@@ -58,7 +58,7 @@ function Map({ location = { lat: 40.758, lng: -73.9855 } }) {
     setSelectedBusiness(null);
   }
 
-  const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const googleMapsApiKey = "AIzaSyB-lGjyHQYQQFSqCqKW-AcxdmD_7itkN20";
 
   return (
     <div className="map-container">
