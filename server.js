@@ -1,34 +1,44 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); 
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON requests
 app.use(express.json());
+app.use(cors()); 
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.log('Error connecting to MongoDB:', err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch((err) => console.error('❌ Error connecting to MongoDB:', err));
 
-// Default Route
-app.get('/', (req, res) => {
-  res.send('Welcome to the Business Backend API');
+const businessSchema = new mongoose.Schema({
+  id: String,
+  name: String,
+  address: String,
+  rating: String,
 });
 
-// Routes
-const userRoutes = require('./routes/userRoutes');
-const businessRoutes = require('./routes/businessRoutes');
+const Business = mongoose.model('Business', businessSchema);
 
-app.use('/api/users', userRoutes);
-app.use('/api/businesses', businessRoutes);
+app.post('/api/businesses', async (req, res) => {
+  try {
+    const businessData = req.body; 
+    console.log('📩 Received business data:', businessData); 
 
-// Start the Server
+    if (!Array.isArray(businessData)) {
+      return res.status(400).json({ error: 'Request body should be an array of businesses.' });
+    }
+    
+    const insertedBusinesses = await Business.insertMany(businessData);
+    res.status(201).json({ message: 'Businesses saved successfully!', data: insertedBusinesses });
+  } catch (error) {
+    console.error('❌ Error saving businesses:', error);
+    res.status(500).json({ error: 'Failed to save businesses.' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

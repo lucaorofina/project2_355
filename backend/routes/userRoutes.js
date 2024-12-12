@@ -11,17 +11,4 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Create a new user
-router.post('/', async (req, res) => {
-  const { name, email, password } = req.body;
-  try {
-    const newUser = new User({ name, email, password });
-    await newUser.save();
-    res.status(201).json(newUser);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
 module.exports = router;

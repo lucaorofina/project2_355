@@ -1,11 +1,17 @@
+/* Form container styles */
 .form-container {
     width: 80%;
     max-width: 600px;
-    margin: 50px auto 0 auto; /* Add bottom margin */
+    margin: 50px auto 0 auto;
     padding: 30px;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 15px 30px 30px rgb(0,0,0);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
   }
   
   .form-group {
@@ -26,6 +32,25 @@
     border-radius: 5px;
   }
   
+  .form-group select {
+    height: 40px;
+  }
+  
+  .form-group input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .checkbox-group label {
+    margin-left: 8px;
+    font-weight: normal;
+  }
+  
   button[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -39,4 +64,13 @@
   
   button[type="submit"]:hover {
     background-color: #0056b3;
+  }
+  
+  button[type="submit"]:active {
+    background-color: #004494;
+    transform: scale(0.98);
+  }
+  
+  button[type="submit"]:focus {
+    outline: none;
   }
