@@ -14,9 +14,16 @@ router.get('/', async (req, res) => {
 
 // Create a new business
 router.post('/', async (req, res) => {
-  const { name, address, industry } = req.body;
+  const { name, address, industry, imageUrl, review, rating } = req.body;
   try {
-    const newBusiness = new Business({ name, address, industry });
+    const newBusiness = new Business({ 
+      name, 
+      address, 
+      industry, 
+      imageUrl, 
+      review, 
+      rating 
+    });
     await newBusiness.save();
     res.status(201).json(newBusiness);
   } catch (err) {

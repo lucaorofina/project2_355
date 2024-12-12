@@ -4,24 +4,41 @@ import MapDisplay from './components/MapDisplay';
 import BusinessList from './components/BusinessList';
 import TripPlannerForm from './components/TripPlannerForm';
 import Navbar from './Navbar';
+import BusinessInfoCard from './components/BusinessInfoCard';
+import GoogleMapSearch from './components/GoogleMapSearch';
+import MapComponent from './components/MapComponent';
 import './App.css';
 
 const App = () => {
   const [businesses, setBusinesses] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [businessInfoCard, setBusinessInfoCard] = useState([]);
+
+  const googleMapsApiKey = "AIzaSyB-lGjyHQYQQFSqCqKW-AcxdmD_7itkN20";
 
   const handleSearch = async (query) => {
-    // Simulate an API call (Replace with a real API)
-    const response = await fetch(`/api/search?query=${query}`);
+    const googleMapsSearchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&key=AIzaSyB-lGjyHQYQQFSqCqKW-AcxdmD_7itkN20`;
+
+    const response = await fetch(googleMapsSearchUrl);
     const data = await response.json();
-    setBusinesses(data.businesses);
-    
-    const businessLocations = data.businesses.map(business => ({
+
+    // Assuming `data.results` contains the places returned by Google Maps API
+    const businesses = data.results.map(business => ({
+      name: business.name,
+      latitude: business.geometry.location.lat,
+      longitude: business.geometry.location.lng,
+    }));
+
+    setBusinesses(businesses);
+
+    const businessLocations = businesses.map(business => ({
       lat: business.latitude,
       lng: business.longitude,
     }));
-    setLocations(businessLocations);
+
+    setLocations(businessLocations); // Update locations state with the places' coordinates
   };
+
 
   return (
     <div className="app">
@@ -30,10 +47,25 @@ const App = () => {
 
       {/*<SearchBar onSearch={handleSearch} />*/}
         <h1> Local Business Directory</h1>
+
+      <GoogleMapSearch onSearch={handleSearch} />
+
+     
+      <h2> Interactive Map</h2>
+      <MapComponent apiKey={googleMapsApiKey} />
+
       <MapDisplay locations={locations} />
+
+      
       <BusinessList businesses={businesses} />
+      <BusinessInfoCard businessInfoCard={businessInfoCard} />
+
+
       <h2>Trip Planner</h2>
       <TripPlannerForm />
+
+      {/* Adding MapComponent To Web App*/}
+
     </div>
   );
 };
