@@ -12,7 +12,7 @@ const getCoordinatesFromAddress = async (address) => {
     const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         address,
-        key: process.env.GOOGLE_MAPS_API_KEY,
+        key: "AIzaSyB-lGjyHQYQQFSqCqKW-AcxdmD_7itkN20",
       },
     });
 
