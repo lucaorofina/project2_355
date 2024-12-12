@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import BusinessInfoCard from './components/BusinessInfoCard';
 import GoogleMapSearch from './components/GoogleMapSearch';
 import MapComponent from './components/MapComponent';
+import BusinessInfoCard from './components/BusinessInfoCard'
 import './App.css';
 
 const App = () => {
@@ -37,13 +38,32 @@ const App = () => {
     }));
 
     setLocations(businessLocations); // Update locations state with the places' coordinates
-  };
+
+  const handleSearch = async (query) => {
+    try {
+      // Simulate an API call (Replace with your actual API endpoint)
+      const response = await fetch(`/api/search?query=${query}`);
+      const data = await response.json();
+
+      // Update businesses and extract locations for the map
+      setBusinesses(data.businesses || []);
+      const businessLocations = (data.businesses || []).map((business) => ({
+        lat: business.latitude,
+        lng: business.longitude,
+      }));
+      setLocations(businessLocations);
+    } catch (error) {
+      console.error('Error fetching businesses:', error);
+    }
 
 
   return (
     <div className="app">
       <Navbar />
+      <h1>Local Business Directory</h1>
 
+      {/* Search bar for handling business search */}
+      {/* <SearchBar onSearch={handleSearch} /> */}
 
       {/*<SearchBar onSearch={handleSearch} />*/}
         <h1> Local Business Directory</h1>
@@ -60,7 +80,15 @@ const App = () => {
       <BusinessList businesses={businesses} />
       <BusinessInfoCard businessInfoCard={businessInfoCard} />
 
+      {/* Map displaying business locations */}
+      <MapDisplay locations={locations} />
 
+      {/* List of businesses */}
+      <BusinessList businesses={businesses} />
+
+      <BusinessInfoCard businessInfoCard={businessInfoCard} />
+
+      {/* Trip Planner Section */}
       <h2>Trip Planner</h2>
       <TripPlannerForm />
 
@@ -70,4 +98,9 @@ const App = () => {
   );
 };
 
+};
+
+};
+
 export default App;
+  
