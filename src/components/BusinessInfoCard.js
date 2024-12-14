@@ -45,4 +45,3 @@ function BusinessInfoCard(props) {
 }
 
 export default BusinessInfoCard;
-
